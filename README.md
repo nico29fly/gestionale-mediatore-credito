@@ -1,16 +1,22 @@
 # Gestione Mediatore Credito
 
 ## Project Overview
-Gestione Mediatore Credito is an application designed to facilitate the management of financial intermediaries. This tool provides an easy-to-use interface for tracking loans, applications, and client information.
+
+The **Gestione Mediatore Credito** is a project designed to streamline the processes involved in credit mediation. This application provides tools for managing credit requests, evaluating loan offers, and assisting clients in finding suitable financial solutions.
 
 ## Features
-- **User Management**: Create and manage user accounts for financial intermediaries.
-- **Loan Tracking**: Record and track the status of various loan applications.
-- **Client Records**: Maintain detailed information about clients and their financial history.
-- **Reporting**: Generate reports on loans, clients, and overall performance metrics.
+- User authentication
+- Credit request management
+- Integration with various financial institutions
+- Report generation
 
-## Installation
-To install the project, follow these steps:
+## Getting Started
+
+### Prerequisites
+- Node.js version 14 or higher
+- MongoDB
+
+### Installation
 1. Clone the repository:
    ```bash
    git clone https://github.com/nico29fly/gestionale-mediatore-credito.git
@@ -19,31 +25,28 @@ To install the project, follow these steps:
    ```bash
    cd gestionale-mediatore-credito
    ```
-3. Install the required dependencies:
+3. Install dependencies:
    ```bash
    npm install
    ```
 
-## Usage
-To start the application, run:
-```bash
-npm start
-```
-Open your web browser and go to [http://localhost:3000](http://localhost:3000) to access the application.
+### Usage
+- Start the application:
+   ```bash
+   npm start
+   ```
+- Open your browser and navigate to `http://localhost:3000`.
 
 ## Contributing
-We welcome contributions to enhance the functionality and performance of the application. Please submit a pull request for any changes you propose.
+
+1. Fork the repo
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a pull request
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Contact
-For any inquiries, please contact:
-- **Name**: Your Name
-- **Email**: your.email@example.com
-- **GitHub**: [nico29fly](https://github.com/nico29fly)
-
----
-
-## Acknowledgments
-Thanks to everyone who has contributed to this project!
+## Acknowledgements
+- Thanks to all contributors and supporters of this project.
