@@ -1,29 +1,13 @@
-# Node.js
+# Dependencies
 node_modules/
 package-lock.json
-
-# React Native
-*.js
-*.jsx
-*.ts
-*.tsx
-*.android.
-*.ios.
-*.log
-*.h
-*.m
-*.plist
-*.xcodeproj
-*.xcworkspace
-*.gradle
-*.unityproj
-*.user
-*.sublime-workspace
-*.sublime-project
 
 # Build output
 dist/
 build/
+
+# Logs
+*.log
 
 # Environment variables
 .env
