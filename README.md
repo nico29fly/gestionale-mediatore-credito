@@ -1,52 +1,45 @@
 # Gestione Mediatore Credito
 
-## Project Overview
+Applicazione web per velocizzare la simulazione di mutui in fase di consulenza al cliente.
 
-The **Gestione Mediatore Credito** is a project designed to streamline the processes involved in credit mediation. This application provides tools for managing credit requests, evaluating loan offers, and assisting clients in finding suitable financial solutions.
+## Funzionalità principali
+- Form web rapido con dati cliente/immobile.
+- Calcolo rata mensile con ammortamento alla francese.
+- Indicatori utili alla pre-valutazione:
+  - LTV (Loan to Value)
+  - Debt-to-Income prima/dopo mutuo
+  - Rata massima consigliata
+- Stima semplificata della probabilità di approvazione con note operative.
 
-## Features
-- User authentication
-- Credit request management
-- Integration with various financial institutions
-- Report generation
+## Requisiti
+- Node.js 14+
 
-## Getting Started
+## Avvio locale
+```bash
+cd backend
+npm install
+npm start
+```
 
-### Prerequisites
-- Node.js version 14 or higher
-- MongoDB
+Apri il browser su `http://localhost:3000`.
 
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/nico29fly/gestionale-mediatore-credito.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd gestionale-mediatore-credito
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
+## API
+### `POST /api/mortgage/calculate`
+Body JSON di esempio:
+```json
+{
+  "propertyValue": 220000,
+  "requestedAmount": 160000,
+  "annualRate": 3.5,
+  "years": 25,
+  "monthlyIncome": 3000,
+  "monthlyDebts": 250,
+  "applicantAge": 37
+}
+```
 
-### Usage
-- Start the application:
-   ```bash
-   npm start
-   ```
-- Open your browser and navigate to `http://localhost:3000`.
-
-## Contributing
-
-1. Fork the repo
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a pull request
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgements
-- Thanks to all contributors and supporters of this project.
+## Test
+```bash
+cd backend
+npm test
+```

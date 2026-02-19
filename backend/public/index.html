@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calcolatore Mutuo</title>
+    <style>
+      body { font-family: Arial, sans-serif; background:#f3f6fb; margin:0; }
+      .container { max-width: 860px; margin: 40px auto; background:#fff; border-radius:12px; padding:24px; box-shadow:0 8px 24px rgba(0,0,0,.08); }
+      h1 { margin-top:0; }
+      .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:16px; }
+      label { font-size:14px; display:block; margin-bottom:6px; color:#222; }
+      input { width:100%; padding:10px; border:1px solid #ccd3e0; border-radius:8px; }
+      button { margin-top:20px; background:#0b5fff; color:white; border:0; padding:12px 18px; border-radius:8px; cursor:pointer; }
+      .result { margin-top:20px; background:#f9fbff; border:1px solid #e2ebff; border-radius:8px; padding:16px; display:none; }
+      .error { color:#b00020; margin-top:8px; }
+      ul { margin: 6px 0 0 20px; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Calcolatore Mutuo Rapido</h1>
+      <p>Inserisci i dati forniti dal cliente e ottieni subito una simulazione.</p>
+
+      <form id="mortgage-form" class="grid">
+        <div><label>Valore immobile (€)</label><input name="propertyValue" type="number" step="0.01" required /></div>
+        <div><label>Importo richiesto (€)</label><input name="requestedAmount" type="number" step="0.01" required /></div>
+        <div><label>Tasso annuo (%)</label><input name="annualRate" type="number" step="0.01" required /></div>
+        <div><label>Durata (anni)</label><input name="years" type="number" required /></div>
+        <div><label>Reddito mensile (€)</label><input name="monthlyIncome" type="number" step="0.01" required /></div>
+        <div><label>Debiti mensili (€)</label><input name="monthlyDebts" type="number" step="0.01" value="0" required /></div>
+        <div><label>Età cliente</label><input name="applicantAge" type="number" value="30" required /></div>
+      </form>
+
+      <button id="calculate">Calcola</button>
+      <div id="error" class="error"></div>
+
+      <div id="result" class="result"></div>
+    </div>
+
+    <script>
+      const form = document.getElementById('mortgage-form');
+      const result = document.getElementById('result');
+      const error = document.getElementById('error');
+
+      function toCurrency(value) {
+        return new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR' }).format(value);
+      }
+
+      document.getElementById('calculate').addEventListener('click', async () => {
+        error.textContent = '';
+        result.style.display = 'none';
+
+        const payload = Object.fromEntries(new FormData(form).entries());
+
+        try {
+          const response = await fetch('/api/mortgage/calculate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || 'Errore durante il calcolo');
+          }
+
+          result.innerHTML = `
+            <h3>Risultato simulazione</h3>
+            <p><strong>Rata mensile:</strong> ${toCurrency(data.summary.monthlyInstallment)}</p>
+            <p><strong>Interessi totali:</strong> ${toCurrency(data.summary.totalInterest)}</p>
+            <p><strong>Totale rimborso:</strong> ${toCurrency(data.summary.totalPayback)}</p>
+            <p><strong>LTV:</strong> ${data.indicators.ltv}%</p>
+            <p><strong>Rata/Reddito (dopo mutuo):</strong> ${data.indicators.debtToIncomeAfter}%</p>
+            <p><strong>Rata consigliata max:</strong> ${toCurrency(data.indicators.maxRecommendedInstallment)}</p>
+            <p><strong>Probabilità approvazione:</strong> ${data.risk.approvalProbability}</p>
+            <ul>${data.risk.notes.map((note) => `<li>${note}</li>`).join('')}</ul>
+          `;
+          result.style.display = 'block';
+        } catch (err) {
+          error.textContent = err.message;
+        }
+      });
+    </script>
+  </body>
+</html>
